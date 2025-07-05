@@ -1,0 +1,65 @@
+import { createServer, Model } from 'miragejs';
+import { articleFactory } from './factories/article';
+
+export function makeServer({ environment = 'development' } = {}) {
+	return createServer({
+		environment,
+
+		models: {
+			article: Model
+		},
+
+		factories: {
+			article: articleFactory
+		},
+
+		seeds(server) {
+			server.createList('article', 20);
+		},
+
+		routes() {
+			this.namespace = 'api';
+
+			// Get articles with pagination, filtering, and search
+			this.get('/articles', (schema, request) => {
+				const { page = '1', limit = '10', search = '' } = request.queryParams;
+
+				const pageNum = parseInt(Array.isArray(page) ? page[0] : page || '1', 10);
+				const limitNum = parseInt(Array.isArray(limit) ? limit[0] : limit || '10', 10);
+
+				let filteredArticles = schema.all('article').models;
+
+				if (search) {
+					const searchLower = Array.isArray(search)
+						? search[0].toLowerCase()
+						: search.toLowerCase();
+					filteredArticles = filteredArticles.filter((article) =>
+						article.title.toLowerCase().includes(searchLower)
+					);
+				}
+
+				const start = (pageNum - 1) * limitNum;
+				const end = start + limitNum;
+				const paginatedArticles = filteredArticles.slice(start, end);
+
+				return {
+					articles: paginatedArticles,
+					meta: {
+						total: filteredArticles.length,
+						page: pageNum,
+						limit: limitNum,
+						totalPages: Math.ceil(filteredArticles.length / limitNum)
+					}
+				};
+			});
+
+			this.get('/articles/:id');
+
+			this.post('/articles');
+
+			this.patch('/articles/:id');
+
+			this.delete('/articles/:id');
+		}
+	});
+}
