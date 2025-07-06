@@ -1,6 +1,3 @@
-/* Define the cascade layers and their order */
-@layer reset, variables, base, utilities, components, theme;
-
 /* CSS Reset Layer */
 @layer reset {
 	*,
@@ -127,6 +124,11 @@
 	.full-width {
 		width: 100%;
 	}
+}
+
+/* Components Layer - For component-specific styles */
+@layer components {
+	/* Component styles are defined in their respective component files */
 }
 
 /* Theme Layer - For theme-specific overrides */

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import '../../app.css';
+	import { currentUser, logout } from '$lib/auth/auth.svelte';
 
 	interface Props {
 		children: Snippet;
@@ -20,6 +20,12 @@
 
 	function toggleSidebar() {
 		sidebarOpen = !sidebarOpen;
+	}
+
+	// Handle logout
+	function handleLogout() {
+		logout();
+		window.location.href = '/';
 	}
 </script>
 
@@ -136,7 +142,7 @@
 
 			<div class="header-actions">
 				<div class="user-profile">
-					<span class="user-name">Admin User</span>
+					<span class="user-name">{currentUser?.user?.name || 'Guest'}</span>
 					<div class="avatar">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -153,6 +159,23 @@
 							<circle cx="12" cy="7" r="4"></circle>
 						</svg>
 					</div>
+					<button class="logout-button" onclick={handleLogout} aria-label="Logout">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+							<polyline points="16 17 21 12 16 7"></polyline>
+							<line x1="21" y1="12" x2="9" y2="12"></line>
+						</svg>
+					</button>
 				</div>
 			</div>
 		</header>
@@ -307,6 +330,26 @@
 		align-items: center;
 		justify-content: center;
 		color: white;
+	}
+
+	.logout-button {
+		background: transparent;
+		border: none;
+		color: var(--color-text-muted);
+		cursor: pointer;
+		padding: var(--spacing-1);
+		border-radius: var(--border-radius-sm);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition:
+			color var(--transition-fast),
+			background-color var(--transition-fast);
+	}
+
+	.logout-button:hover {
+		color: var(--color-danger);
+		background-color: var(--color-surface-variant);
 	}
 
 	@media (min-width: 769px) {

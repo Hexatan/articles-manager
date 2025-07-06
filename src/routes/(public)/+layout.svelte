@@ -1,5 +1,8 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import { goto } from '$app/navigation';
+	import RoleSwitcher from '$lib/components/RoleSwitcher.svelte';
 
 	interface Props {
 		children: Snippet;
@@ -12,11 +15,19 @@
 	<header class="site-header">
 		<div class="container">
 			<h1 class="site-title">Article Manager</h1>
+			<Button
+				variant="secondary"
+				onclick={() => {
+					goto('/admin');
+				}}
+				>Go to admin
+			</Button>
 		</div>
 	</header>
 
 	<main class="main-content">
 		<div class="container">
+			<RoleSwitcher />
 			{@render children()}
 		</div>
 	</main>
