@@ -45,6 +45,60 @@ To preview the production build locally:
 npm run preview
 ```
 
+## Testing
+
+### Unit Testing
+
+To run unit tests:
+
+```bash
+npm run test
+```
+
+To run unit tests in watch mode:
+
+```bash
+npm run test:unit
+```
+
+### End-to-End Testing with Cypress
+
+To run Cypress tests, you need to ensure that the development server is running on port 5174 (which is configured in the `cypress.config.ts` file as the baseUrl).
+
+#### Running the Development Server and Cypress Together
+
+The easiest way to run Cypress tests is to use the following command, which will start the development server and open the Cypress test runner in a single step:
+
+```bash
+npm run cy:dev
+```
+
+This command starts the development server on port 5174 and then opens the Cypress test runner.
+
+#### Running Cypress Separately
+
+If you prefer to run the development server and Cypress separately:
+
+1. First, start the development server:
+   ```bash
+   npm run dev
+   ```
+
+2. Then, in a separate terminal, open the Cypress test runner:
+   ```bash
+   npm run cy:open
+   ```
+
+#### Running Cypress Tests in Headless Mode
+
+To run Cypress tests in headless mode (useful for CI/CD pipelines):
+
+```bash
+npm run cy:run
+```
+
+Note: Make sure the development server is running before executing this command.
+
 ## Development Notes
 
 ### Data Loading Strategy

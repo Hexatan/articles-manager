@@ -1,34 +1,13 @@
-import { z } from 'zod';
+import * as z from 'zod/v4';
 
 // Define the article schema with validation rules
-export const articleSchema = z.object({
-	title: z
-		.string({
-			required_error: 'Title is required',
-			invalid_type_error: 'Title must be a string'
-		})
-		.min(1, { message: 'Title cannot be empty' })
-		.max(100, { message: 'Title cannot be longer than 100 characters' }),
-
-	author: z
-		.string({
-			required_error: 'Author is required',
-			invalid_type_error: 'Author must be a string'
-		})
-		.min(1, { message: 'Author name cannot be empty' }),
-
-	status: z.enum(['published', 'draft', 'in_review'], {
-		errorMap: (issue, ctx) => {
-			if (issue.code === 'invalid_type') {
-				return { message: 'Status is required' };
-			}
-			if (issue.code === 'invalid_enum_value') {
-				return { message: 'Status must be one of: published, draft, in_review' };
-			}
-			return { message: ctx.defaultError };
-		}
+export const articleSchema = z
+	.strictObject({
+		title: z.string().min(1, { message: 'Title is required' }).max(100),
+		author: z.string().min(1, { message: 'Author is required' }),
+		status: z.enum(['published', 'draft', 'in_review'], { message: 'Status is required' })
 	})
-});
+	.required({ title: true, author: true, status: true });
 
 // Type for a validated article
 export type Article = z.infer<typeof articleSchema>;

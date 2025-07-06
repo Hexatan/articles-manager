@@ -60,7 +60,13 @@ export function makeServer({ environment = 'development' } = {}) {
 
 			this.get('/articles/:id');
 
-			this.post('/articles');
+			this.post('/articles', (schema, request) => {
+				const attrs = JSON.parse(request.requestBody);
+				attrs.createdAt = new Date().toISOString();
+
+				schema.create('article', attrs);
+				return { articles: attrs };
+			});
 
 			this.patch('/articles/:id');
 

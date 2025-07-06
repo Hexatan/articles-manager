@@ -116,7 +116,9 @@
 	<header class="page-header">
 		<h1>Articles</h1>
 		<div class="header-actions">
-			<Button variant="primary">New Article</Button>
+			<a href="/admin/articles/new">
+				<Button variant="primary">New Article</Button>
+			</a>
 		</div>
 	</header>
 
