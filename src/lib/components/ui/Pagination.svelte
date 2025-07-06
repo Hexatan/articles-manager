@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Button from './Button.svelte';
 	import Select from './Select.svelte';
-	import Input from './Input.svelte';
 	import { onMount } from 'svelte';
 
 	interface PaginationMeta {
@@ -33,7 +32,7 @@
 			{ value: '100', label: '100' }
 		];
 
-		const filteredOptions = baseOptions.filter(option => parseInt(option.value) <= meta.total);
+		const filteredOptions = baseOptions.filter((option) => parseInt(option.value) <= meta.total);
 
 		if (meta.total > 0) {
 			filteredOptions.push({ value: meta.total.toString(), label: 'All' });
@@ -117,8 +116,17 @@
 					disabled={meta.page === 1}
 					aria-label="Previous page"
 				>
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-							 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
 						<polyline points="15 18 9 12 15 6"></polyline>
 					</svg>
 				</Button>
@@ -133,8 +141,17 @@
 					disabled={meta.page === meta.totalPages}
 					aria-label="Next page"
 				>
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-							 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
 						<polyline points="9 18 15 12 9 6"></polyline>
 					</svg>
 				</Button>
@@ -153,7 +170,12 @@
 		</div>
 	{:else}
 		<!-- Full desktop view -->
-		<div class="pagination-controls-wrapper" aria-label="Pagination buttons" role="group" aria-live="polite">
+		<div
+			class="pagination-controls-wrapper"
+			aria-label="Pagination buttons"
+			role="group"
+			aria-live="polite"
+		>
 			<div class="pagination-options">
 				{#if onLimitChange}
 					<div class="items-per-page">
@@ -176,8 +198,17 @@
 					disabled={meta.page === 1}
 					aria-label="Previous page"
 				>
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-							 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
 						<polyline points="15 18 9 12 15 6"></polyline>
 					</svg>
 				</Button>
@@ -201,7 +232,7 @@
 				<!-- Pages around current page -->
 				{#each getPageRange(meta.page, meta.totalPages) as pageNum (pageNum)}
 					<Button
-						variant={pageNum === meta.page ? "primary" : "outline"}
+						variant={pageNum === meta.page ? 'primary' : 'outline'}
 						size="sm"
 						onclick={() => onPageChange(pageNum)}
 						aria-label={`Go to page ${pageNum}`}
@@ -235,8 +266,17 @@
 					disabled={meta.page === meta.totalPages}
 					aria-label="Next page"
 				>
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-							 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
 						<polyline points="9 18 15 12 9 6"></polyline>
 					</svg>
 				</Button>

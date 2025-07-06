@@ -80,6 +80,7 @@ This command starts the development server on port 5174 and then opens the Cypre
 If you prefer to run the development server and Cypress separately:
 
 1. First, start the development server:
+
    ```bash
    npm run dev
    ```
