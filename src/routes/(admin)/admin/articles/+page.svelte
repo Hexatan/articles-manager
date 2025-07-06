@@ -6,18 +6,10 @@
 	import Alert from '$lib/components/ui/Alert.svelte';
 	import Pagination from '$lib/components/ui/Pagination.svelte';
 	import ArticleListItem from '$lib/components/ArticleListItem.svelte';
+	import DeleteArticleModal from '$lib/components/DeleteArticleModal.svelte';
 	import { onMount } from 'svelte';
+	import type { Article } from '$lib/types/article';
 
-	// Define the Article interface
-	interface Article {
-		id: string;
-		title: string;
-		author: string;
-		status: 'published' | 'draft' | 'in_review';
-		createdAt: string;
-	}
-
-	// State for articles data
 	let articles = $state<Article[]>([]);
 	let meta = $state({
 		total: 0,
@@ -32,7 +24,9 @@
 	let currentPage = $state(1);
 	let statusFilter = $state('');
 
-	// Status options for the filter
+	let isDeleteModalOpen = $state(false);
+	let articleToDelete = $state<string | null>(null);
+
 	const statusOptions = [
 		{ value: '', label: 'All Statuses' },
 		{ value: 'published', label: 'Published' },
@@ -40,7 +34,6 @@
 		{ value: 'in_review', label: 'In review' }
 	];
 
-	// Function to fetch articles with direct parameters
 	async function fetchArticles(
 		params: { page?: number; limit?: number; search?: string; status?: string } = {}
 	) {
@@ -48,13 +41,11 @@
 		error = null;
 
 		try {
-			// Use provided parameters or defaults
 			const page = params.page || currentPage;
 			const limit = params.limit || 10;
 			const search = params.search !== undefined ? params.search : searchInput;
 			const status = params.status !== undefined ? params.status : statusFilter;
 
-			// Update current page, search input, and status filter
 			currentPage = page;
 			if (search !== searchInput) {
 				searchInput = search;
@@ -63,15 +54,12 @@
 				statusFilter = status;
 			}
 
-			// Construct the API URL with query parameters
 			const apiUrl = `/api/articles?page=${page}&limit=${limit}${search ? `&search=${search}` : ''}${status ? `&status=${status}` : ''}`;
 
-			// Fetch articles from the API
 			const response = await fetch(apiUrl);
 
 			const data = await response.json();
 
-			// Update state with fetched data
 			articles = data.articles;
 			meta = data.meta;
 		} catch (err) {
@@ -89,12 +77,10 @@
 		}
 	}
 
-	// Fetch articles on mount
 	onMount(() => {
 		fetchArticles();
 	});
 
-	// Handle search form submission
 	function handleSearchSubmit() {
 		if (isSearching) return false;
 		isSearching = true;
@@ -106,11 +92,56 @@
 		return () => clearTimeout(timeoutId);
 	}
 
-	// Handle status filter change
 	function handleStatusChange() {
 		fetchArticles({ page: 1, search: searchInput, status: statusFilter });
 	}
+
+	function handleDeleteArticle(articleId: string) {
+		const article = articles.find((a) => a.id === articleId);
+		if (article) {
+			articleToDelete = articleId;
+			isDeleteModalOpen = true;
+		}
+	}
+
+	async function confirmDeleteArticle() {
+		if (!articleToDelete) return;
+
+		try {
+			const response = await fetch(`/api/articles/${articleToDelete}`, {
+				method: 'DELETE'
+			});
+
+			if (!response.ok) {
+				throw new Error('Failed to delete article');
+			}
+
+			fetchArticles({ page: currentPage });
+		} catch (err) {
+			error = err instanceof Error ? err.message : 'An unknown error occurred';
+		} finally {
+			isDeleteModalOpen = false;
+			articleToDelete = null;
+		}
+	}
+
+	function cancelDeleteArticle() {
+		isDeleteModalOpen = false;
+		articleToDelete = null;
+	}
 </script>
+
+<svelte:head>
+	<title>Articles | Article Manager</title>
+</svelte:head>
+
+<!-- Delete Confirmation Modal -->
+<DeleteArticleModal
+	article={articles.find((a) => a.id === articleToDelete) || null}
+	isOpen={isDeleteModalOpen}
+	onConfirm={confirmDeleteArticle}
+	onCancel={cancelDeleteArticle}
+/>
 
 <div class="articles-page">
 	<header class="page-header">
@@ -144,7 +175,7 @@
 			</div>
 			<div class="filter-actions">
 				<Button
-					btnType="submit"
+					type="submit"
 					variant="outline"
 					size="sm"
 					disabled={isSearching}
@@ -191,7 +222,7 @@
 		{:else}
 			<div class="articles-list" data-testid="article-list">
 				{#each articles as article (article.id)}
-					<ArticleListItem {article} />
+					<ArticleListItem {article} onDelete={handleDeleteArticle} />
 				{/each}
 			</div>
 

@@ -25,23 +25,40 @@
 		Showing {startItem} to {endItem} of {meta.total} items
 	</div>
 	<div class="pagination-controls">
-		<Button
-			variant="outline"
-			size="sm"
-			disabled={meta.page <= 1}
-			onclick={() => onPageChange(meta.page - 1)}
-		>
-			Previous
-		</Button>
+		{#if meta.totalPages >= 3 && meta.page !== 1}
+			<Button variant="outline" size="sm" onclick={() => onPageChange(1)}>1</Button>
+		{/if}
+		{#if meta.page - 1 > 1}
+			<Button
+				variant="outline"
+				size="sm"
+				disabled={meta.page <= 1}
+				onclick={() => onPageChange(meta.page - 1)}
+			>
+				{meta.page - 1}
+			</Button>
+		{/if}
 		<span class="pagination-page">Page {meta.page} of {meta.totalPages}</span>
-		<Button
-			variant="outline"
-			size="sm"
-			disabled={meta.page >= meta.totalPages}
-			onclick={() => onPageChange(meta.page + 1)}
-		>
-			Next
-		</Button>
+		{#if meta.page + 1 < meta.totalPages}
+			<Button
+				variant="outline"
+				size="sm"
+				disabled={meta.page >= meta.totalPages}
+				onclick={() => onPageChange(meta.page + 1)}
+			>
+				{meta.page + 1}
+			</Button>
+		{/if}
+		{#if meta.totalPages >= 3}
+			<Button
+				variant="outline"
+				size="sm"
+				disabled={meta.page === meta.totalPages}
+				onclick={() => onPageChange(meta.totalPages)}
+			>
+				{meta.totalPages}
+			</Button>
+		{/if}
 	</div>
 </div>
 

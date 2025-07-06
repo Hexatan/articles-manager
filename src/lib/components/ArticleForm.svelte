@@ -70,25 +70,18 @@
 	/>
 
 	<div class="form-actions">
-		<Button variant="outline" onclick={() => history.back()}>
-			Cancel
-		</Button>
-		<Button
-			btnType="submit"
-			variant="primary"
-			loading={isSubmitting}
-			disabled={isSubmitting}
-		>
+		<Button variant="outline" onclick={() => history.back()} type="button">Cancel</Button>
+		<Button type="submit" variant="primary" loading={isSubmitting} disabled={isSubmitting}>
 			{isSubmitting ? 'Saving...' : submitLabel}
 		</Button>
 	</div>
 </form>
 
 <style>
-    .form-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: var(--spacing-4);
-        margin-top: var(--spacing-6);
-    }
+	.form-actions {
+		display: flex;
+		justify-content: flex-end;
+		gap: var(--spacing-4);
+		margin-top: var(--spacing-6);
+	}
 </style>

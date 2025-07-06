@@ -3,7 +3,6 @@
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 
 	interface Props extends HTMLButtonAttributes {
-		btnType?: 'button' | 'submit' | 'reset';
 		variant: 'primary' | 'secondary' | 'danger' | 'outline' | 'ghost';
 		size?: 'sm' | 'md' | 'lg';
 		fullWidth?: boolean;
@@ -12,7 +11,6 @@
 	}
 
 	let {
-		btnType,
 		variant,
 		size = 'md',
 		disabled = false,
@@ -24,7 +22,6 @@
 </script>
 
 <button
-	type={btnType}
 	class="button {variant} {size} {fullWidth ? 'full-width' : ''}"
 	disabled={disabled || loading}
 	{...props}

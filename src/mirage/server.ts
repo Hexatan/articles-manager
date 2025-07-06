@@ -1,4 +1,4 @@
-import { createServer, Model } from 'miragejs';
+import { createServer, Model, Response } from 'miragejs';
 import { articleFactory } from './factories/article';
 
 export function makeServer({ environment = 'development' } = {}) {
@@ -14,7 +14,7 @@ export function makeServer({ environment = 'development' } = {}) {
 		},
 
 		seeds(server) {
-			server.createList('article', 150);
+			server.createList('article', 35);
 		},
 
 		routes() {
@@ -58,7 +58,16 @@ export function makeServer({ environment = 'development' } = {}) {
 				};
 			});
 
-			this.get('/articles/:id');
+			this.get('/articles/:id', (schema, request) => {
+				const id = request.params.id;
+				const article = schema.find('article', id);
+
+				if (!article) {
+					return new Response(404, {}, { error: 'Article not found' });
+				}
+
+				return { article };
+			});
 
 			this.post('/articles', (schema, request) => {
 				const attrs = JSON.parse(request.requestBody);
@@ -68,9 +77,31 @@ export function makeServer({ environment = 'development' } = {}) {
 				return { articles: attrs };
 			});
 
-			this.patch('/articles/:id');
+			this.patch('/articles/:id', (schema, request) => {
+				const id = request.params.id;
+				const attrs = JSON.parse(request.requestBody);
 
-			this.delete('/articles/:id');
+				const article = schema.find('article', id);
+
+				if (!article) {
+					return new Response(404, {}, { error: 'Article not found' });
+				}
+
+				article.update(attrs);
+				return { article };
+			});
+
+			this.delete('/articles/:id', (schema, request) => {
+				const id = request.params.id;
+				const article = schema.find('article', id);
+
+				if (!article) {
+					return new Response(404, {}, { error: 'Article not found' });
+				}
+
+				article.destroy();
+				return new Response(204);
+			});
 		}
 	});
 }
