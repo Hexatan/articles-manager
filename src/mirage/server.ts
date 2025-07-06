@@ -14,7 +14,7 @@ export function makeServer({ environment = 'development' } = {}) {
 		},
 
 		seeds(server) {
-			server.createList('article', 20);
+			server.createList('article', 150);
 		},
 
 		routes() {
@@ -22,7 +22,7 @@ export function makeServer({ environment = 'development' } = {}) {
 
 			// Get articles with pagination, filtering, and search
 			this.get('/articles', (schema, request) => {
-				const { page = '1', limit = '10', search = '' } = request.queryParams;
+				const { page = '1', limit = '10', search = '', status = '' } = request.queryParams;
 
 				const pageNum = parseInt(Array.isArray(page) ? page[0] : page || '1', 10);
 				const limitNum = parseInt(Array.isArray(limit) ? limit[0] : limit || '10', 10);
@@ -36,6 +36,11 @@ export function makeServer({ environment = 'development' } = {}) {
 					filteredArticles = filteredArticles.filter((article) =>
 						article.title.toLowerCase().includes(searchLower)
 					);
+				}
+
+				if (status) {
+					const statusValue = Array.isArray(status) ? status[0] : status;
+					filteredArticles = filteredArticles.filter((article) => article.status === statusValue);
 				}
 
 				const start = (pageNum - 1) * limitNum;

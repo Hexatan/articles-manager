@@ -11,7 +11,7 @@ export const articleFactory = Factory.extend({
 	},
 
 	status() {
-		return faker.helpers.arrayElement(['Published', 'Draft', 'In review'] as const);
+		return faker.helpers.arrayElement(['published', 'draft', 'in_review'] as const);
 	},
 
 	createdAt() {
