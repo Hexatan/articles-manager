@@ -3,7 +3,7 @@ import { makeServer } from '$lib/../mirage/server';
 
 // Initialize MirageJS only in development mode and in the browser
 if (browser && import.meta.env.DEV) {
-  makeServer();
+	makeServer();
 }
 
 export const prerender = true;
