@@ -15,7 +15,7 @@ export function makeServer({ environment = 'development' } = {}) {
 		},
 
 		seeds(server) {
-			server.createList('article', 35);
+			server.createList('article', 145);
 		},
 
 		routes() {

@@ -21,9 +21,6 @@
 	let startItem = $derived((meta.page - 1) * meta.limit + 1);
 	let endItem = $derived(Math.min(meta.page * meta.limit, meta.total));
 
-	let jumpToPage = $state('');
-	let jumpToPageError = $state('');
-
 	let pageSizeOptions = $derived.by(() => {
 		const baseOptions = [
 			{ value: '10', label: '10' },
@@ -286,86 +283,86 @@
 </nav>
 
 <style>
-    @layer components {
-        .pagination {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: var(--spacing-4);
-            margin-top: var(--spacing-6);
-            padding-top: var(--spacing-4);
-            border-top: 1px solid var(--color-border);
+	@layer components {
+		.pagination {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: var(--spacing-4);
+			margin-top: var(--spacing-6);
+			padding-top: var(--spacing-4);
+			border-top: 1px solid var(--color-border);
 
-            @media (min-width: 769px) {
-                flex-direction: row;
-                justify-content: space-between;
-                flex-wrap: wrap;
-            }
-        }
+			@media (min-width: 769px) {
+				flex-direction: row;
+				justify-content: space-between;
+				flex-wrap: wrap;
+			}
+		}
 
-        .pagination-info {
-            font-size: var(--font-size-sm);
-            color: var(--color-text-light);
-        }
+		.pagination-info {
+			font-size: var(--font-size-sm);
+			color: var(--color-text-light);
+		}
 
-        .pagination-controls {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-2);
-        }
+		.pagination-controls {
+			display: flex;
+			align-items: center;
+			gap: var(--spacing-2);
+		}
 
-        .pagination-controls-mobile {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: var(--spacing-4);
-            width: 100%;
-        }
+		.pagination-controls-mobile {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: var(--spacing-4);
+			width: 100%;
+		}
 
-        .pagination-controls-wrapper {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            flex-grow: 1;
-        }
+		.pagination-controls-wrapper {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			flex-grow: 1;
+		}
 
-        .pagination-buttons {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--spacing-2);
-            width: 100%;
-        }
+		.pagination-buttons {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: var(--spacing-2);
+			width: 100%;
+		}
 
-        .pagination-page {
-            margin: 0 var(--spacing-2);
-            font-size: var(--font-size-sm);
-        }
+		.pagination-page {
+			margin: 0 var(--spacing-2);
+			font-size: var(--font-size-sm);
+		}
 
-        .pagination-options {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-4);
-            width: 100%;
-            margin-top: var(--spacing-2);
+		.pagination-options {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-4);
+			width: 100%;
+			margin-top: var(--spacing-2);
 
-            @media (min-width: 769px) {
-                display: flex;
-                flex-direction: row;
-                align-items: flex-end;
-                gap: var(--spacing-4);
-                margin-top: 0;
-                width: auto;
-            }
-        }
+			@media (min-width: 769px) {
+				display: flex;
+				flex-direction: row;
+				align-items: flex-end;
+				gap: var(--spacing-4);
+				margin-top: 0;
+				width: auto;
+			}
+		}
 
-        .items-per-page {
-            min-width: 120px;
-        }
+		.items-per-page {
+			min-width: 120px;
+		}
 
-        .ellipsis {
-            margin: 0 var(--spacing-1);
-            color: var(--color-text-light);
-        }
-    }
+		.ellipsis {
+			margin: 0 var(--spacing-1);
+			color: var(--color-text-light);
+		}
+	}
 </style>
