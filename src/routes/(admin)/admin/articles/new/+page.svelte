@@ -5,7 +5,6 @@
 	import { goto } from '$app/navigation';
 	import { z } from 'zod/v4';
 
-	// State for form data
 	let title = $state('');
 	let author = $state('');
 	let status = $state('');
@@ -13,17 +12,14 @@
 	let formError = $state<string | null>(null);
 	let isSubmitting = $state(false);
 
-	// Handle form submission
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
 
-		// Reset errors
 		errors = {};
 		formError = null;
 		isSubmitting = true;
 
 		try {
-			// Validate form data using Zod schema
 			const result = articleSchema.safeParse({ title, author, status });
 
 			if (result.error) {
@@ -71,9 +67,9 @@
 			bind:title
 			bind:author
 			bind:status
-			errors={errors}
-			formError={formError}
-			isSubmitting={isSubmitting}
+			{errors}
+			{formError}
+			{isSubmitting}
 			submitLabel="Create Article"
 			onsubmit={handleSubmit}
 		/>
@@ -81,20 +77,20 @@
 </div>
 
 <style>
-    .new-article-page {
-        width: 100%;
-        max-width: 800px;
-        margin: 0 auto;
-    }
+	.new-article-page {
+		width: 100%;
+		max-width: 800px;
+		margin: 0 auto;
+	}
 
-    .page-header {
-        margin-bottom: var(--spacing-6);
-    }
+	.page-header {
+		margin-bottom: var(--spacing-6);
+	}
 
-    .page-header h1 {
-        font-size: var(--font-size-2xl);
-        font-weight: 700;
-        color: var(--color-text);
-        margin: 0;
-    }
+	.page-header h1 {
+		font-size: var(--font-size-2xl);
+		font-weight: 700;
+		color: var(--color-text);
+		margin: 0;
+	}
 </style>
