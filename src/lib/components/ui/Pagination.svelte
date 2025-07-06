@@ -25,14 +25,13 @@
 		Showing {startItem} to {endItem} of {meta.total} items
 	</div>
 	<div class="pagination-controls">
-		{#if meta.totalPages >= 3 && meta.page !== 1}
+		{#if meta.page !== 1}
 			<Button variant="outline" size="sm" onclick={() => onPageChange(1)}>1</Button>
 		{/if}
-		{#if meta.page - 1 > 1}
+		{#if meta.page > 2}
 			<Button
 				variant="outline"
 				size="sm"
-				disabled={meta.page <= 1}
 				onclick={() => onPageChange(meta.page - 1)}
 			>
 				{meta.page - 1}
@@ -43,17 +42,15 @@
 			<Button
 				variant="outline"
 				size="sm"
-				disabled={meta.page >= meta.totalPages}
 				onclick={() => onPageChange(meta.page + 1)}
 			>
 				{meta.page + 1}
 			</Button>
 		{/if}
-		{#if meta.totalPages >= 3}
+		{#if meta.page !== meta.totalPages && meta.totalPages > 2}
 			<Button
 				variant="outline"
 				size="sm"
-				disabled={meta.page === meta.totalPages}
 				onclick={() => onPageChange(meta.totalPages)}
 			>
 				{meta.totalPages}
