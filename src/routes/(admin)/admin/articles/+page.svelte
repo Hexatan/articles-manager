@@ -23,6 +23,7 @@
 	let isSearching = $state(false);
 	let currentPage = $state(1);
 	let statusFilter = $state('');
+	let searchTimeoutId: ReturnType<typeof setTimeout> | null = $state(null);
 
 	let isDeleteModalOpen = $state(false);
 	let articleToDelete = $state<string | null>(null);
@@ -85,15 +86,17 @@
 		if (isSearching) return false;
 		isSearching = true;
 
-		const timeoutId = setTimeout(() => {
+		// Clear any existing timeout to implement debouncing
+		if (searchTimeoutId) {
+			clearTimeout(searchTimeoutId);
+		}
+
+		searchTimeoutId = setTimeout(() => {
 			fetchArticles({ page: 1, search: searchInput, status: statusFilter });
+			searchTimeoutId = null;
 		}, 300);
 
-		return () => clearTimeout(timeoutId);
-	}
-
-	function handleStatusChange() {
-		fetchArticles({ page: 1, search: searchInput, status: statusFilter });
+		return true;
 	}
 
 	function handleDeleteArticle(articleId: string) {
@@ -154,7 +157,20 @@
 	</header>
 
 	<Card>
-		<div class="filters">
+		<form 
+			class="filters"
+			onsubmit={(e) => {
+				e.preventDefault();
+				if (!isSearching) {
+					// Clear any existing timeout
+					if (searchTimeoutId) {
+						clearTimeout(searchTimeoutId);
+						searchTimeoutId = null;
+					}
+					fetchArticles({ page: 1, search: searchInput, status: statusFilter });
+				}
+			}}
+		>
 			<div class="search-box">
 				<Input
 					label="Search"
@@ -170,21 +186,10 @@
 					label="Status"
 					options={statusOptions}
 					bind:value={statusFilter}
-					onchange={handleStatusChange}
+					onchange={handleSearchSubmit}
 				/>
 			</div>
-			<div class="filter-actions">
-				<Button
-					type="submit"
-					variant="outline"
-					size="sm"
-					disabled={isSearching}
-					onclick={handleSearchSubmit}
-				>
-					{isSearching ? 'Searching...' : 'Search'}
-				</Button>
-			</div>
-		</div>
+		</form>
 
 		{#if isLoading && !isSearching}
 			<div class="loading-indicator">

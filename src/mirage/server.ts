@@ -1,5 +1,6 @@
 import { createServer, Model, Response } from 'miragejs';
 import { articleFactory } from './factories/article';
+import Fuse from 'fuse.js';
 
 export function makeServer({ environment = 'development' } = {}) {
 	return createServer({
@@ -30,12 +31,16 @@ export function makeServer({ environment = 'development' } = {}) {
 				let filteredArticles = schema.all('article').models;
 
 				if (search) {
-					const searchLower = Array.isArray(search)
-						? search[0].toLowerCase()
-						: search.toLowerCase();
-					filteredArticles = filteredArticles.filter((article) =>
-						article.title.toLowerCase().includes(searchLower)
-					);
+					const searchTerm = Array.isArray(search) ? search[0] : search;
+					if (searchTerm.trim()) {
+						const fuse = new Fuse(filteredArticles, {
+							keys: ['title', 'author'],
+							threshold: 0.4,
+							includeScore: true
+						});
+						const searchResults = fuse.search(searchTerm);
+						filteredArticles = searchResults.map((result) => result.item);
+					}
 				}
 
 				if (status) {

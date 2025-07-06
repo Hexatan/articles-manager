@@ -27,7 +27,8 @@
 		disabled = false,
 		required = false,
 		error = '',
-		fullWidth = true
+		fullWidth = true,
+		...props
 	}: Props = $props();
 
 	const uid = $props.id();
@@ -52,6 +53,7 @@
 			{required}
 			aria-invalid={!!error}
 			aria-describedby={error ? `${uid}-error` : undefined}
+			{...props}
 		>
 			<option value="" disabled selected hidden>{placeholder}</option>
 			{#each options as option (option.value)}
