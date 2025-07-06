@@ -231,8 +231,12 @@
 				{/each}
 			</div>
 
-			{#if meta.totalPages > 1}
-				<Pagination {meta} onPageChange={(page) => fetchArticles({ page })} />
+   {#if meta.totalPages > 1}
+				<Pagination 
+					{meta} 
+					onPageChange={(page) => fetchArticles({ page })} 
+					onLimitChange={(limit) => fetchArticles({ page: 1, limit })}
+				/>
 			{/if}
 		{/if}
 	</Card>
