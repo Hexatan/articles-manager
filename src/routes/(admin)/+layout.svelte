@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { currentUser, logout } from '$lib/auth/auth.svelte';
+	import Header from '$lib/components/Header.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
 
 	interface Props {
 		children: Snippet;
@@ -20,6 +22,14 @@
 
 	function toggleSidebar() {
 		sidebarOpen = !sidebarOpen;
+	}
+
+	// State to control the visibility of the role switcher
+	let showRoleSwitcher = $state(false);
+
+	// Toggle the visibility of the role switcher
+	function toggleRoleSwitcher() {
+		showRoleSwitcher = !showRoleSwitcher;
 	}
 
 	// Handle logout
@@ -121,26 +131,27 @@
 	<!-- Main content area -->
 	<div class="content-wrapper">
 		<!-- Header -->
-		<header class="header">
-			<button class="mobile-menu-button" onclick={toggleSidebar} aria-label="Toggle menu">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				>
-					<line x1="3" y1="12" x2="21" y2="12"></line>
-					<line x1="3" y1="6" x2="21" y2="6"></line>
-					<line x1="3" y1="18" x2="21" y2="18"></line>
-				</svg>
-			</button>
-
-			<div class="header-actions">
+		<Header variant="admin" {showRoleSwitcher}>
+			{#snippet leftAction()}
+				<button class="mobile-menu-button" onclick={toggleSidebar} aria-label="Toggle menu">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<line x1="3" y1="12" x2="21" y2="12"></line>
+						<line x1="3" y1="6" x2="21" y2="6"></line>
+						<line x1="3" y1="18" x2="21" y2="18"></line>
+					</svg>
+				</button>
+			{/snippet}
+			{#snippet actions()}
 				<div class="user-profile">
 					<span class="user-name">{currentUser?.user?.name || 'Guest'}</span>
 					<div class="avatar">
@@ -159,6 +170,9 @@
 							<circle cx="12" cy="7" r="4"></circle>
 						</svg>
 					</div>
+					<Button variant="secondary" onclick={toggleRoleSwitcher}
+						>{showRoleSwitcher ? 'Hide' : 'Show'} Role Switcher
+					</Button>
 					<button class="logout-button" onclick={handleLogout} aria-label="Logout">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -177,8 +191,8 @@
 						</svg>
 					</button>
 				</div>
-			</div>
-		</header>
+			{/snippet}
+		</Header>
 
 		<!-- Main content -->
 		<main class="main-content">
@@ -287,28 +301,13 @@
 		}
 	}
 
-	/* Header */
-	.header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: var(--spacing-4);
-		background-color: var(--color-background);
-		border-bottom: 1px solid var(--color-border);
-	}
-
+	/* Mobile menu button */
 	.mobile-menu-button {
 		display: block;
 		background: transparent;
 		border: none;
 		color: var(--color-text);
 		cursor: pointer;
-	}
-
-	.header-actions {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-4);
 	}
 
 	.user-profile {

@@ -29,7 +29,7 @@
 		--color-text-light: #6b7280;
 		--color-text-inverse: #f9fafb;
 		--color-background: #ffffff;
-		--color-background-alt: #f9fafb;
+		--color-background-alt: #d0d1d3;
 		--color-border: #7d7d80;
 
 		/* Typography */
@@ -133,4 +133,68 @@
 
 /* Theme Layer - For theme-specific overrides */
 @layer theme {
+	/* Light Theme (default) */
+	:root,
+	.light-theme {
+		/* Colors */
+		--color-primary: #3b82f6;
+		--color-primary-dark: #2563eb;
+		--color-secondary: #10b981;
+		--color-secondary-dark: #059669;
+		--color-danger: #ef4444;
+		--color-danger-dark: #dc2626;
+		--color-warning: #f59e0b;
+		--color-warning-dark: #d97706;
+		--color-success: #10b981;
+		--color-success-dark: #059669;
+		--color-info: #0ea5e9;
+		--color-info-dark: #0284c7;
+
+		/* Neutrals */
+		--color-text: #1f2937;
+		--color-text-light: #6b7280;
+		--color-text-inverse: #f9fafb;
+		--color-background: #ffffff;
+		--color-background-alt: #d0d1d3;
+		--color-background-hover: #f3f4f6;
+		--color-border: #7d7d80;
+
+		/* Status Colors with Light Backgrounds */
+		--color-success-light: #d1fae5;
+		--color-warning-light: #fef3c7;
+		--color-danger-light: #fee2e2;
+		--color-info-light: #e0f2fe;
+	}
+
+	/* Dark Theme */
+	.dark-theme {
+		/* Colors - slightly adjusted for dark mode */
+		--color-primary: #60a5fa;
+		--color-primary-dark: #3b82f6;
+		--color-secondary: #34d399;
+		--color-secondary-dark: #10b981;
+		--color-danger: #f87171;
+		--color-danger-dark: #ef4444;
+		--color-warning: #fbbf24;
+		--color-warning-dark: #f59e0b;
+		--color-success: #34d399;
+		--color-success-dark: #10b981;
+		--color-info: #38bdf8;
+		--color-info-dark: #0ea5e9;
+
+		/* Neutrals */
+		--color-text: #f9fafb;
+		--color-text-light: #9ca3af;
+		--color-text-inverse: #1f2937;
+		--color-background: #111827;
+		--color-background-alt: #1f2937;
+		--color-background-hover: #374151;
+		--color-border: #4b5563;
+
+		/* Status Colors with Dark Backgrounds */
+		--color-success-light: #064e3b;
+		--color-warning-light: #78350f;
+		--color-danger-light: #7f1d1d;
+		--color-info-light: #0c4a6e;
+	}
 }

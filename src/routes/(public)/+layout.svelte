@@ -2,19 +2,26 @@
 	import type { Snippet } from 'svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { goto } from '$app/navigation';
-	import RoleSwitcher from '$lib/components/RoleSwitcher.svelte';
+	import Header from '$lib/components/Header.svelte';
 
 	interface Props {
 		children: Snippet;
 	}
 
 	let { children }: Props = $props();
+
+	// State to control the visibility of the role switcher
+	let showRoleSwitcher = $state(true);
+
+	// Toggle the visibility of the role switcher
+	function toggleRoleSwitcher() {
+		showRoleSwitcher = !showRoleSwitcher;
+	}
 </script>
 
 <div class="public-layout">
-	<header class="site-header">
-		<div class="container">
-			<h1 class="site-title">Article Manager</h1>
+	<Header {showRoleSwitcher}>
+		{#snippet actions()}
 			<Button
 				variant="secondary"
 				onclick={() => {
@@ -22,12 +29,14 @@
 				}}
 				>Go to admin
 			</Button>
-		</div>
-	</header>
+			<Button variant="secondary" onclick={toggleRoleSwitcher}
+				>{showRoleSwitcher ? 'Hide' : 'Show'} Role Switcher
+			</Button>
+		{/snippet}
+	</Header>
 
 	<main class="main-content">
 		<div class="container">
-			<RoleSwitcher />
 			{@render children()}
 		</div>
 	</main>
@@ -55,6 +64,12 @@
 	.site-title {
 		margin: 0;
 		font-size: var(--font-size-xl);
+	}
+
+	.header-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-4);
 	}
 
 	.main-content {
