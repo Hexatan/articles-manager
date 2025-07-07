@@ -146,24 +146,14 @@
 		border-radius: var(--border-radius-sm);
 		cursor: pointer;
 		transition: all var(--transition-fast);
-	}
 
-	.theme-button:hover {
-		background-color: var(--color-background-hover);
-	}
+		&:hover {
+			background-color: var(--color-background-hover);
+		}
 
-	.theme-button.active {
-		background-color: var(--color-background);
-		box-shadow: var(--shadow-sm);
-	}
-
-	.theme-label {
-		display: none;
-	}
-
-	@media (min-width: 640px) {
-		.theme-label {
-			display: inline;
+		&.active {
+			background-color: var(--color-background);
+			box-shadow: var(--shadow-sm);
 		}
 	}
 </style>

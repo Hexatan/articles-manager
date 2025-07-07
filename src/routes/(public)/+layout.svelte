@@ -85,8 +85,26 @@
 	}
 
 	.container {
-		max-width: 1200px;
+		width: 100%;
 		margin: 0 auto;
 		padding: 0 var(--spacing-4);
+	}
+
+	@media (min-width: 768px) {
+		.container {
+			max-width: 720px;
+		}
+	}
+
+	@media (min-width: 992px) {
+		.container {
+			max-width: 960px;
+		}
+	}
+
+	@media (min-width: 1200px) {
+		.container {
+			max-width: 1140px;
+		}
 	}
 </style>

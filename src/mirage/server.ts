@@ -15,7 +15,12 @@ export function makeServer({ environment = 'development' } = {}) {
 		},
 
 		seeds(server) {
-			server.createList('article', 145);
+			// Choose the appropriate seed function based on the environment
+			if (environment === 'test') {
+				server.createList('article', 3);
+			} else {
+				server.createList('article', 145);
+			}
 		},
 
 		routes() {

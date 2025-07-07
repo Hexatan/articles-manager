@@ -24,14 +24,6 @@
 		sidebarOpen = !sidebarOpen;
 	}
 
-	// State to control the visibility of the role switcher
-	let showRoleSwitcher = $state(false);
-
-	// Toggle the visibility of the role switcher
-	function toggleRoleSwitcher() {
-		showRoleSwitcher = !showRoleSwitcher;
-	}
-
 	// Handle logout
 	function handleLogout() {
 		logout();
@@ -131,7 +123,7 @@
 	<!-- Main content area -->
 	<div class="content-wrapper">
 		<!-- Header -->
-		<Header variant="admin" {showRoleSwitcher}>
+		<Header variant="admin">
 			{#snippet leftAction()}
 				<button class="mobile-menu-button" onclick={toggleSidebar} aria-label="Toggle menu">
 					<svg
@@ -170,9 +162,6 @@
 							<circle cx="12" cy="7" r="4"></circle>
 						</svg>
 					</div>
-					<Button variant="secondary" onclick={toggleRoleSwitcher}
-						>{showRoleSwitcher ? 'Hide' : 'Show'} Role Switcher
-					</Button>
 					<button class="logout-button" onclick={handleLogout} aria-label="Logout">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +203,8 @@
 		top: 0;
 		bottom: 0;
 		left: 0;
-		width: 100%;
+		width: 280px; /* Better width for mobile */
+		max-width: 85%; /* Prevent taking too much screen space on small devices */
 		background-color: var(--color-primary-dark);
 		border-right: 1px solid var(--color-border);
 		display: flex;
@@ -224,10 +214,12 @@
 			transform var(--transition-normal);
 		z-index: 10;
 		transform: translateX(-100%);
+		overflow-y: auto; /* Allow scrolling on small screens */
 	}
 
 	.sidebar.open {
 		transform: translateX(0);
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility on mobile */
 	}
 
 	.sidebar-header {
@@ -238,7 +230,7 @@
 	}
 
 	.logo {
-		font-size: var(--font-size-lg);
+		font-size: var(--font-size-md); /* Smaller font on mobile */
 		font-weight: 700;
 		color: var(--color-text-inverse);
 		margin: 0;
@@ -250,10 +242,11 @@
 		border: none;
 		color: var(--color-text-light);
 		cursor: pointer;
+		padding: var(--spacing-2);
 	}
 
 	.sidebar-nav {
-		padding: var(--spacing-4) 0;
+		padding: var(--spacing-2) 0; /* Less padding on mobile */
 		flex: 1;
 	}
 
@@ -294,10 +287,20 @@
 			position: relative;
 			width: 250px;
 			transform: translateX(0);
+			box-shadow: none;
+			max-width: none;
 		}
 
 		.sidebar-toggle {
 			display: none;
+		}
+
+		.logo {
+			font-size: var(--font-size-lg); /* Larger font on desktop */
+		}
+
+		.sidebar-nav {
+			padding: var(--spacing-4) 0; /* More padding on desktop */
 		}
 	}
 
@@ -314,10 +317,13 @@
 		display: flex;
 		align-items: center;
 		gap: var(--spacing-2);
+		flex-wrap: wrap; /* Allow wrapping on small screens */
 	}
 
 	.user-name {
 		font-weight: 500;
+		font-size: var(--font-size-sm); /* Smaller on mobile */
+		order: 2; /* Reorder for mobile */
 	}
 
 	.avatar {
@@ -329,6 +335,22 @@
 		align-items: center;
 		justify-content: center;
 		color: white;
+		order: 1; /* Reorder for mobile */
+	}
+
+	@media (min-width: 769px) {
+		.user-profile {
+			flex-wrap: nowrap;
+		}
+
+		.user-name {
+			font-size: var(--font-size-md);
+			order: 1; /* Restore order on desktop */
+		}
+
+		.avatar {
+			order: 2; /* Restore order on desktop */
+		}
 	}
 
 	.logout-button {
@@ -367,7 +389,13 @@
 
 	.main-content {
 		flex: 1;
-		padding: var(--spacing-6);
+		padding: var(--spacing-3); /* Less padding on mobile */
 		overflow-y: auto;
+	}
+
+	@media (min-width: 769px) {
+		.main-content {
+			padding: var(--spacing-6); /* More padding on desktop */
+		}
 	}
 </style>

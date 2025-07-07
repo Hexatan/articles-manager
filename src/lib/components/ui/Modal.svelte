@@ -62,8 +62,8 @@
 <dialog
 	bind:this={dialogElement}
 	class="modal {size}"
-	on:keydown={handleKeydown}
-	on:click={handleOutsideClick}
+	onkeydown={handleKeydown}
+	onclick={handleOutsideClick}
 	aria-labelledby="modal-title"
 	aria-modal="true"
 	{...props}
@@ -71,7 +71,7 @@
 	<div class="modal-content">
 		<header class="modal-header">
 			<h2 id="modal-title" class="modal-title">{title}</h2>
-			<button type="button" class="modal-close" aria-label="Close modal" on:click={close}>
+			<button type="button" class="modal-close" aria-label="Close modal" onclick={close}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="20"

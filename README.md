@@ -104,7 +104,8 @@ Note: Make sure the development server is running before executing this command.
 
 ### Data Loading Strategy
 
-While in production and in a real product we should aim to use SvelteKit's load and form actions for data fetching and mutations, with the restriction of MirageJS only being available in the browser, the decision was made to do the loading in the page component directly.
+While in production and in a real product, we should aim to use SvelteKit's load and form actions for data fetching and mutations.
+With the restriction of MirageJS only being available in the browser, the decision was made to do the loading in the page component directly.
 
 This approach was necessary because:
 
@@ -116,3 +117,70 @@ In a production environment without these restrictions, the recommended approach
 
 - Use `+page.ts` or `+page.server.ts` with the `load` function for data fetching
 - Use form actions in `+page.server.ts` for data mutations
+
+### Role-Based Access Control
+
+The application implements a role-based access control (RBAC) system to manage user permissions and access to different parts of the application.
+
+#### Authentication Implementation
+
+The authentication system is implemented in `src/lib/auth/auth.svelte.ts` using Svelte 5's Runes for reactive state management:
+
+- `currentUser`: A reactive state object that stores the currently authenticated user
+- `login(userType)`: Authenticates a user and stores their role in localStorage for persistence
+- `logout()`: Clears the authentication state
+- `initAuth()`: Initializes the authentication state from localStorage on application startup
+
+For demonstration, the application uses mock users with predefined roles. In a production environment, this would be replaced with a real authentication system that verifies credentials against a backend service.
+
+#### Authorization Mechanisms
+
+Access control is enforced at multiple levels:
+
+1. **Route-Level Protection**: The admin section is protected by checking the user's role in the `+layout.ts` file:
+
+   ```typescript
+   if (!currentUser.user || !hasRole('admin')) {
+   	throw error(403, { message: 'Access Denied' });
+   }
+   ```
+
+2. **Component-Level Protection**: The `hasRole(role)` function can be used to conditionally render UI elements based on the user's role:
+
+   ```typescript
+   export function hasRole(role: UserRole): boolean {
+   	return !!currentUser.user?.roles.includes(role);
+   }
+   ```
+
+#### UI Components for Role Management
+
+The application includes a `RoleSwitcher` component that allows users to switch between different roles for testing and demonstration purposes. This component:
+
+- Displays buttons for logging in as different user types (Admin, Editor, Viewer)
+- Shows the current user's name and roles
+- Provides a logout button
+
+#### Security Considerations
+
+While the current implementation is suitable for demonstration, a production implementation would need to address:
+
+1. **Server-Side Validation**: All authorization checks should be duplicated on the server side
+2. **Token-Based Authentication**: Use JWT or similar tokens with proper expiration and refresh mechanisms
+3. **API Protection**: Ensure all API endpoints validate permissions before processing requests
+4. **CSRF Protection**: Implement Cross-Site Request Forgery protection
+5. **Audit Logging**: Log all authentication and authorization events for security monitoring
+
+### Mirage Configuration for E2E Testing
+
+The application uses different seed data for Mirage when running in Cypress E2E tests versus development mode:
+
+1. **Development Mode**: Creates 145 random articles using Faker.js
+2. **E2E Test Mode**: Creates a smaller set of articles
+
+This configuration ensures that E2E tests have a consistent, predictable dataset to work with, making tests more reliable and easier to write.
+
+The environment detection is automatic:
+
+- When running in Cypress, the application detects `window.Cypress` and uses the 'test' environment
+- In normal development, it uses the 'development' environment

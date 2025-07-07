@@ -118,10 +118,14 @@
 	}
 
 	/* Responsive adjustments */
-	@media (max-width: 768px) {
-		/* When role switcher is present, add more padding to the header */
+	/* When role switcher is present, add more padding to the header on mobile */
+	.site-header:has(.role-switcher-container) {
+		padding-bottom: var(--spacing-6);
+	}
+
+	@media (min-width: 769px) {
 		.site-header:has(.role-switcher-container) {
-			padding-bottom: var(--spacing-6);
+			padding-bottom: var(--spacing-4);
 		}
 	}
 </style>
