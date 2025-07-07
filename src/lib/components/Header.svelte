@@ -117,8 +117,6 @@
 		}
 	}
 
-	/* Responsive adjustments */
-	/* When role switcher is present, add more padding to the header on mobile */
 	.site-header:has(.role-switcher-container) {
 		padding-bottom: var(--spacing-6);
 	}

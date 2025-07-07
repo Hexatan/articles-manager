@@ -1,3 +1,33 @@
+/**
+ * Theme Management Module
+ *
+ * This module provides theme management functionality for the application,
+ * supporting light, dark, and system-based themes.
+ *
+ * Key features:
+ * - Theme state management using Svelte's $state
+ * - System theme detection
+ * - Local storage persistence
+ * - SSR-safe implementation
+ *
+ * Usage:
+ * ```typescript
+ * import { getTheme, setTheme, getActualTheme } from '$lib/theme/theme.svelte';
+ *
+ * // Get current theme setting (light/dark/system)
+ * const currentTheme = getTheme();
+ *
+ * // Get actual applied theme (light/dark only)
+ * const appliedTheme = getActualTheme();
+ *
+ * // Change theme
+ * setTheme('dark');
+ * ```
+ *
+ * Note: The module handles SSR by defaulting to 'light' theme when
+ * running on the server and 'system' when no preference is stored.
+ */
+
 import { browser } from '$app/environment';
 
 export type ThemeMode = 'light' | 'dark' | 'system';

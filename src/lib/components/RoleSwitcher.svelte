@@ -57,7 +57,6 @@
 		margin-bottom: 0.5rem;
 	}
 
-	/* Smaller text in the header context */
 	:global(.header-actions) .role-switcher h3 {
 		font-size: var(--font-size-sm);
 		margin-top: 0;

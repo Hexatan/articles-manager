@@ -1,3 +1,8 @@
+<!--
+@component
+A modal component for confirming article deletion.
+Extend the base Modal components by using the snippets provided
+-->
 <script lang="ts">
 	import Modal from '$lib/components/ui/Modal.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -23,11 +28,12 @@
 	{/snippet}
 	{#snippet footer()}
 		<div class="modal-actions">
-			<Button variant="outline" onclick={onCancel} data-testid="cancel-delete-button">Cancel</Button
-			>
+			<Button variant="outline" onclick={onCancel} data-testid="cancel-delete-button"
+				>Cancel
+			</Button>
 			<Button variant="danger" onclick={onConfirm} data-testid="confirm-delete-button"
-				>Delete</Button
-			>
+				>Delete
+			</Button>
 		</div>
 	{/snippet}
 </Modal>

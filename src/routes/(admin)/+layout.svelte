@@ -2,7 +2,6 @@
 	import type { Snippet } from 'svelte';
 	import { currentUser, logout } from '$lib/auth/auth.svelte';
 	import Header from '$lib/components/Header.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
 
 	interface Props {
 		children: Snippet;
@@ -203,8 +202,8 @@
 		top: 0;
 		bottom: 0;
 		left: 0;
-		width: 280px; /* Better width for mobile */
-		max-width: 85%; /* Prevent taking too much screen space on small devices */
+		width: 280px;
+		max-width: 85%;
 		background-color: var(--color-primary-dark);
 		border-right: 1px solid var(--color-border);
 		display: flex;
@@ -219,7 +218,7 @@
 
 	.sidebar.open {
 		transform: translateX(0);
-		box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility on mobile */
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 	}
 
 	.sidebar-header {
@@ -230,7 +229,7 @@
 	}
 
 	.logo {
-		font-size: var(--font-size-md); /* Smaller font on mobile */
+		font-size: var(--font-size-md);
 		font-weight: 700;
 		color: var(--color-text-inverse);
 		margin: 0;
@@ -246,7 +245,7 @@
 	}
 
 	.sidebar-nav {
-		padding: var(--spacing-2) 0; /* Less padding on mobile */
+		padding: var(--spacing-2) 0;
 		flex: 1;
 	}
 
@@ -296,11 +295,11 @@
 		}
 
 		.logo {
-			font-size: var(--font-size-lg); /* Larger font on desktop */
+			font-size: var(--font-size-lg);
 		}
 
 		.sidebar-nav {
-			padding: var(--spacing-4) 0; /* More padding on desktop */
+			padding: var(--spacing-4) 0;
 		}
 	}
 
@@ -317,13 +316,13 @@
 		display: flex;
 		align-items: center;
 		gap: var(--spacing-2);
-		flex-wrap: wrap; /* Allow wrapping on small screens */
+		flex-wrap: wrap;
 	}
 
 	.user-name {
 		font-weight: 500;
-		font-size: var(--font-size-sm); /* Smaller on mobile */
-		order: 2; /* Reorder for mobile */
+		font-size: var(--font-size-sm);
+		order: 2;
 	}
 
 	.avatar {
@@ -335,7 +334,7 @@
 		align-items: center;
 		justify-content: center;
 		color: white;
-		order: 1; /* Reorder for mobile */
+		order: 1;
 	}
 
 	@media (min-width: 769px) {
@@ -345,11 +344,11 @@
 
 		.user-name {
 			font-size: var(--font-size-md);
-			order: 1; /* Restore order on desktop */
+			order: 1;
 		}
 
 		.avatar {
-			order: 2; /* Restore order on desktop */
+			order: 2;
 		}
 	}
 
@@ -389,13 +388,13 @@
 
 	.main-content {
 		flex: 1;
-		padding: var(--spacing-3); /* Less padding on mobile */
+		padding: var(--spacing-3);
 		overflow-y: auto;
 	}
 
 	@media (min-width: 769px) {
 		.main-content {
-			padding: var(--spacing-6); /* More padding on desktop */
+			padding: var(--spacing-6);
 		}
 	}
 </style>
