@@ -140,6 +140,10 @@
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: var(--spacing-6);
 		margin-bottom: var(--spacing-8);
+
+		@media (max-width: 768px) {
+			grid-template-columns: 1fr;
+		}
 	}
 
 	.article-card {
@@ -196,11 +200,5 @@
 	.end-message {
 		color: var(--color-text-light);
 		font-style: italic;
-	}
-
-	@media (max-width: 768px) {
-		.article-grid {
-			grid-template-columns: 1fr;
-		}
 	}
 </style>

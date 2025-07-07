@@ -42,6 +42,13 @@
 		align-items: flex-start;
 		gap: var(--spacing-4);
 		margin-bottom: var(--spacing-6);
+
+		@media (min-width: 769px) {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			gap: 0;
+		}
 	}
 
 	.page-header h1 {
@@ -55,17 +62,8 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: var(--spacing-6);
-	}
 
-	@media (min-width: 769px) {
-		.page-header {
-			flex-direction: row;
-			justify-content: space-between;
-			align-items: center;
-			gap: 0;
-		}
-
-		.dashboard-grid {
+		@media (min-width: 769px) {
 			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		}
 	}

@@ -85,7 +85,6 @@
 	>
 </svelte:head>
 
-<!-- Delete Confirmation Modal -->
 <DeleteArticleModal
 	{article}
 	isOpen={isDeleteModalOpen}
@@ -190,6 +189,11 @@
 		justify-content: space-between;
 		align-items: flex-start;
 		margin-bottom: var(--spacing-4);
+
+		@media (max-width: 640px) {
+			flex-direction: column;
+			gap: var(--spacing-2);
+		}
 	}
 
 	.article-title {
@@ -242,12 +246,5 @@
 	.status-badge.in-review {
 		background-color: var(--color-info-light);
 		color: var(--color-info);
-	}
-
-	@media (max-width: 640px) {
-		.article-header {
-			flex-direction: column;
-			gap: var(--spacing-2);
-		}
 	}
 </style>

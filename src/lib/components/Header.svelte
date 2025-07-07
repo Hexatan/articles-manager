@@ -119,10 +119,8 @@
 
 	.site-header:has(.role-switcher-container) {
 		padding-bottom: var(--spacing-6);
-	}
 
-	@media (min-width: 769px) {
-		.site-header:has(.role-switcher-container) {
+		@media (min-width: 769px) {
 			padding-bottom: var(--spacing-4);
 		}
 	}

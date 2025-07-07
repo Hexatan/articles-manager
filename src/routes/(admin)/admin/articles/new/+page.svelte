@@ -31,7 +31,6 @@
 				return;
 			}
 
-			// Make API call to create the article
 			const response = await fetch('/api/articles', {
 				method: 'POST',
 				headers: {
@@ -47,10 +46,8 @@
 				return;
 			}
 
-			// Redirect to the articles list on success
 			await goto('/admin/articles');
 		} catch (error) {
-			// Handle unexpected errors
 			formError = error instanceof Error ? error.message : 'An unexpected error occurred';
 			isSubmitting = false;
 		}

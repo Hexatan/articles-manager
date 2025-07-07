@@ -93,10 +93,24 @@
 			text-decoration: none;
 			color: inherit;
 			transition: background-color 0.2s ease;
-		}
 
-		.article-item:hover {
-			background-color: var(--color-background-hover);
+			&:hover {
+				background-color: var(--color-background-hover);
+			}
+
+			@media (max-width: 640px) {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: var(--spacing-2);
+				padding-bottom: var(--spacing-6);
+			}
+
+			@media (max-width: 640px) {
+				display: grid;
+				grid-template-columns: auto auto;
+				gap: var(--spacing-2);
+				width: 100%;
+			}
 		}
 
 		.article-info {
@@ -126,6 +140,12 @@
 			font-weight: 500;
 			text-transform: uppercase;
 			margin-right: var(--spacing-2);
+
+			@media (max-width: 640px) {
+				grid-column: 1;
+				grid-row: 1;
+				margin-bottom: var(--spacing-1);
+			}
 		}
 
 		.status-badge.published {
@@ -143,17 +163,28 @@
 			color: var(--color-info);
 		}
 
-		.article-actions {
-			display: flex;
-			gap: var(--spacing-1);
-			padding: var(--spacing-2);
-			z-index: 10;
-			border-radius: var(--border-radius-sm);
+    .article-actions {
+      display: flex;
+      position: absolute;
+      bottom: var(--spacing-2);
+      right: var(--spacing-2);
+      top: auto;
+      opacity: 1;
+      padding: var(--spacing-1);
+      justify-content: flex-end;
+      gap: var(--spacing-1);
+      z-index: 10;
+      border-radius: var(--border-radius-sm);
 
-			@media (min-width: 769px) {
-				flex-direction: column;
-			}
-		}
+      @media (min-width: 641px) {
+        position: static;
+        padding: var(--spacing-2);
+      }
+
+      @media (min-width: 769px) {
+        flex-direction: column;
+      }
+    }
 
 		.action-button {
 			display: flex;
@@ -196,26 +227,6 @@
 		}
 
 		@media (max-width: 640px) {
-			.article-item {
-				flex-direction: column;
-				align-items: flex-start;
-				gap: var(--spacing-2);
-				padding-bottom: var(--spacing-6);
-			}
-
-			.article-meta {
-				display: grid;
-				grid-template-columns: auto auto;
-				gap: var(--spacing-2);
-				width: 100%;
-			}
-
-			.article-meta .status-badge {
-				grid-column: 1;
-				grid-row: 1;
-				margin-bottom: var(--spacing-1);
-			}
-
 			.article-author {
 				grid-column: 1 / span 2;
 				grid-row: 2;
@@ -224,16 +235,6 @@
 			.article-date {
 				grid-column: 1 / span 2;
 				grid-row: 3;
-			}
-
-			.article-actions {
-				position: absolute;
-				bottom: var(--spacing-2);
-				right: var(--spacing-2);
-				top: auto;
-				opacity: 1;
-				padding: var(--spacing-1);
-				justify-content: flex-end;
 			}
 		}
 	}

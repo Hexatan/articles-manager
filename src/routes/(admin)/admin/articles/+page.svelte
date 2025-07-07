@@ -138,7 +138,6 @@
 	<title>Articles | Article Manager</title>
 </svelte:head>
 
-<!-- Delete Confirmation Modal -->
 <DeleteArticleModal
 	article={articles.find((a) => a.id === articleToDelete) || null}
 	isOpen={isDeleteModalOpen}
@@ -253,6 +252,13 @@
 		align-items: flex-start;
 		gap: var(--spacing-4);
 		margin-bottom: var(--spacing-6);
+
+		@media (min-width: 769px) {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			gap: 0;
+		}
 	}
 
 	.loading-indicator {
@@ -276,6 +282,13 @@
 		align-items: stretch;
 		margin-bottom: var(--spacing-4);
 		gap: var(--spacing-4);
+
+		@media (min-width: 769px) {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+		}
 	}
 
 	.search-box {
@@ -291,22 +304,6 @@
 		display: flex;
 		justify-content: flex-end;
 		gap: var(--spacing-2);
-	}
-
-	@media (min-width: 769px) {
-		.page-header {
-			flex-direction: row;
-			justify-content: space-between;
-			align-items: center;
-			gap: 0;
-		}
-
-		.filters {
-			flex-direction: row;
-			justify-content: space-between;
-			align-items: center;
-			flex-wrap: wrap;
-		}
 	}
 
 	.articles-placeholder {
