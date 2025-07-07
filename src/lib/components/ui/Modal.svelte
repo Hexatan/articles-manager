@@ -112,6 +112,8 @@
 			max-height: 90vh;
 			overflow: hidden;
 			margin: auto;
+			background-color: var(--color-background);
+			color: var(--color-text);
 		}
 
 		.modal::backdrop {
