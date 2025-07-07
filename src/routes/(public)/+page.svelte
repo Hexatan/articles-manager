@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import Card from '$lib/components/ui/Card.svelte';
 	import type { Article } from '$lib/types/article';
+	import { formatDate } from '$lib/utils/date';
 
 	// State for articles
 	let articles = $state<Article[]>([]);
@@ -11,7 +12,6 @@
 	let observer: IntersectionObserver | null = null;
 	let loadingRef: HTMLDivElement;
 
-	// Function to fetch articles
 	async function fetchArticles(page: number, limit: number = 12) {
 		isLoading = true;
 		try {
@@ -40,7 +40,17 @@
 		fetchArticles(1);
 	});
 
-	// Set up intersection observer for infinite scroll
+	/**
+	 * Intersection Observer is used here to implement infinite scrolling functionality.
+	 * It observes a target element (loadingRef) at the bottom of the article list.
+	 * When this element becomes visible in the viewport, it triggers loading of more articles.
+	 *
+	 * How it works:
+	 * 1. Creates an observer that watches the loading element
+	 * 2. When the loading element enters the viewport (isIntersecting is true)
+	 * 3. If there are more articles (hasMore) and we're not currently loading (isLoading)
+	 * 4. Triggers fetching of the next page of articles
+	 */
 	$effect(() => {
 		// Clean up previous observer if it exists
 		if (observer) {
@@ -56,7 +66,7 @@
 				}
 			},
 			{
-				root: null
+				root: null // Important: providing settings up as null uses the default viewport f the browser
 			}
 		);
 
@@ -72,16 +82,6 @@
 			}
 		};
 	});
-
-	// Format date for display
-	function formatDate(dateString: string): string {
-		const date = new Date(dateString);
-		return date.toLocaleDateString('en-US', {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric'
-		});
-	}
 </script>
 
 <div class="article-feed">

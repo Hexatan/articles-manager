@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Article } from '$lib/types/article';
+	import { formatDate } from '$lib/utils/date.js';
 
 	interface Props {
 		article: Article;
@@ -7,13 +8,6 @@
 	}
 
 	const { article, onDelete }: Props = $props();
-
-	// Format the date to a more readable format
-	const formattedDate = new Date(article.createdAt).toLocaleDateString('en-NZ', {
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric'
-	});
 
 	function handleDeleteClick(event: MouseEvent) {
 		event.stopPropagation();
@@ -30,7 +24,7 @@
 			<h3 class="article-title">{article.title}</h3>
 			<div class="article-meta">
 				<span class="article-author">By {article.author}</span>
-				<span class="article-date">Created on {formattedDate}</span>
+				<span class="article-date">Created on {formatDate(article.createdAt)}</span>
 				<span class="status-badge {article.status.toLowerCase().replace(' ', '-')}"
 					>{article.status}</span
 				>

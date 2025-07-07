@@ -3,16 +3,14 @@
 	import Card from '$lib/components/ui/Card.svelte';
 	import type { Article } from '$lib/types/article';
 	import { page } from '$app/state';
+	import { formatDate } from '$lib/utils/date';
 
-	// Get article ID from the route parameter
 	const articleId = page.params.id;
 
-	// State for article
 	let article = $state<Article | null>(null);
 	let isLoading = $state(true);
 	let error = $state<string | null>(null);
 
-	// Fetch the article
 	async function fetchArticle() {
 		isLoading = true;
 		error = null;
@@ -34,17 +32,6 @@
 		}
 	}
 
-	// Format date for display
-	function formatDate(dateString: string): string {
-		const date = new Date(dateString);
-		return date.toLocaleDateString('en-US', {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric'
-		});
-	}
-
-	// Load article on mount
 	onMount(() => {
 		fetchArticle();
 	});
